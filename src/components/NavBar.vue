@@ -2,7 +2,7 @@
   <div
     class="bg-blue-700 text-white h-16 sticky top-0 flex justify-between items-center pl-5 pr-5 shadow-black"
   >
-    <img src="" />
+    <img src="./../assets/_41593672-ba37-41a7-bf1d-71a34ae6f52c-removebg-preview.png" class="h-10"/>
     <nav>
       <ul class="flex gap-5 justify-between">
         <li
