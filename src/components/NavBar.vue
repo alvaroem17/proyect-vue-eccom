@@ -2,9 +2,14 @@
   <div
     class="bg-blue-700 text-white h-16 sticky top-0 flex justify-between items-center pl-5 pr-5 shadow-black"
   >
-    <img src="./../assets/_41593672-ba37-41a7-bf1d-71a34ae6f52c-removebg-preview.png" class="h-10"/>
+    <section class="w-60">
+      <img
+        src="./../assets/_41593672-ba37-41a7-bf1d-71a34ae6f52c-removebg-preview.png"
+        class="h-10"
+      />
+    </section>
     <nav>
-      <ul class="flex gap-5 justify-between">
+      <ul class="flex gap-5 justify-between w-60">
         <li
           v-for="(item, index) in navItems"
           :key="index"
@@ -14,13 +19,17 @@
         </li>
       </ul>
     </nav>
-    <section class="flex gap-2 justify-between">
+    <section class="flex gap-2 justify-center w-60">
       <button
         class="bg-white text-blue-700 rounded h-10 w-24 hover:bg-gray-200"
+        @click="() => $router.push('/login')"
       >
         Login
       </button>
-      <button class="border rounded h-10 w-24 hover:bg-blue-800">
+      <button
+        class="border rounded h-10 w-24 hover:bg-blue-800"
+        @click="() => $router.push('/register')"
+      >
         Register
       </button>
     </section>
@@ -28,7 +37,7 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from "vue-router";
 const navItems = ["Home", "Products", "Cart"];
 </script>
 
