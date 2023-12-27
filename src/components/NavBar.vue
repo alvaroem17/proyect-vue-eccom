@@ -19,7 +19,10 @@
         </li>
       </ul>
     </nav>
-    <section class="flex gap-2 justify-center w-60">
+    <section
+      class="flex gap-2 justify-center w-60"
+      v-if="!hasToken"
+    >
       <button
         class="bg-white text-blue-700 rounded h-10 w-24 hover:bg-gray-200"
         @click="() => $router.push('/login')"
@@ -33,12 +36,38 @@
         Register
       </button>
     </section>
+    <section
+      class="flex gap-2 justify-center w-60"
+      v-else
+    >
+      <button
+        class="bg-white text-blue-700 rounded h-10 w-24 hover:bg-gray-200"
+        @click="logOut"
+      >
+        Log Out
+      </button>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
+import { onMounted, ref } from "vue";
+
+const hasToken = ref(false)
 const navItems = ["Home", "Products", "Cart"];
+
+const logOut = () => {
+  sessionStorage.removeItem('token')
+  sessionStorage.removeItem('userId')
+  hasToken.value = false
+  window.location.href = "/"
+}
+
+onMounted(() =>{
+  hasToken.value = sessionStorage.getItem('token')
+})
+
 </script>
 
 <style lang="scss" scoped></style>

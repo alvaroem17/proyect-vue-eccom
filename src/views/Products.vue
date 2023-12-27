@@ -1,10 +1,10 @@
 <template>
   <h1 class="text-5xl text-center h-10 p-10 font-bold sm:mb-10">Products</h1>
-  <main class="flex flex-wrap justify-center sm:p-5 2xl:px-24 gap-y-10 gap-x-5">
+  <main class="flex flex-wrap sm:p-5 2xl:px-24 gap-y-10 gap-x-5">
     <div
       v-for="product in products"
       :key="product.id"
-      class="sm:w-1/4 2xl:w-80 h-auto shadow-lg hover:shadow-blue-300 rounded-lg flex flex-col justify-between"
+      class="sm:w-[80%] 2xl:w-[24%] h-auto shadow-lg hover:shadow-blue-300 rounded-lg flex flex-col justify-between"
     >
       <img
         :src="product.thumbnail"
@@ -17,7 +17,7 @@
           <p class="text-sm text-gray-400 line-clamp-2">
             {{ product.description }}
           </p>
-          <p class="text-lg font-bold">${{ product.price }}</p>
+          <p class="text-lg font-bold text-blue-700">${{ product.price }}</p>
         </section>
         <section class="flex gap-2">
           <button
@@ -51,10 +51,11 @@ onMounted(async () => {
 });
 
 const addToCart = (product) => {
-  if (!localStorage.getItem("token")) {
+  if (!sessionStorage.getItem("token")) {
     console.log("no token");
     window.location.href = "/login";
   }
+  console.log("token: " + sessionStorage.getItem("token"))
 };
 </script>
 
