@@ -13,7 +13,8 @@
       <section class="flex gap-2 justify-center">
         <input type="number" v-model="item.quantity" class="w-10" />
         <button
-          class="w-10 h-10 rounded hover:scale-105 bg-red-600 text-white grid place-items-center" @click="removeFromCart(item._id._id)"
+          class="w-10 h-10 rounded hover:scale-105 bg-red-600 text-white grid place-items-center"
+          @click="removeFromCart(item._id._id)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -30,12 +31,24 @@
         </button>
       </section>
     </div>
-    <div class="flex justify-end gap-2 items-center w-1/3  h-10">
+    <div class="flex justify-end gap-2 items-center w-1/3 h-10">
       <p><strong class="text-2xl">Total:</strong> ${{ total }}</p>
-      <button class="w-24 h-10 rounded ml-20 hover:shadow-inner bg-blue-600 text-white font-bold hover:scale-105 hover:bg-blue-800" @click="pay">Pay</button>
-      <button class="w-24 h-10 rounded hover:shadow-inner bg-red-600 text-sm text-white font-semibold hover:scale-105 hover:bg-red-800" @click="clearCart">Clear cart</button>
+      <button
+        class="w-24 h-10 rounded ml-20 hover:shadow-inner bg-blue-600 text-white font-bold hover:scale-105 hover:bg-blue-800"
+        @click="pay"
+      >
+        Pay
+      </button>
+      <button
+        class="w-24 h-10 rounded hover:shadow-inner bg-red-600 text-sm text-white font-semibold hover:scale-105 hover:bg-red-800"
+        @click="clearCart"
+      >
+        Clear cart
+      </button>
     </div>
-    <p v-if="paid !== false" class="text-green-500 absolute left-10 bottom-10">{{ paid }}</p>
+    <p v-if="paid !== false" class="text-green-500 absolute left-10 bottom-10">
+      {{ paid }}
+    </p>
   </div>
 </template>
 
@@ -61,14 +74,15 @@ const removeFromCart = async (id) => {
   try {
     cart.value.products = cart.value.products.filter(
       (item) => item._id._id !== id
-    )
-    if(cart.value.products.length === 0){
-      total.value = 0
-    }else {
-      total.value = cart.value.products.reduce(
-      (acc, item) => acc + item._id.price * item.quantity,
-      0
     );
+    if (cart.value.products.length === 0) {
+      total.value = 0;
+    } else {
+      total.value = cart.value.products.reduce(
+        (acc, item) => acc + item._id.price * item.quantity,
+        0
+      );
+      total.value = total.value.toFixed(2);
     }
     updateMyCart(cart.value);
   } catch (error) {
@@ -78,8 +92,8 @@ const removeFromCart = async (id) => {
 
 const pay = () => {
   paid.value = "Your products will be delivered shortly";
-  clearCart()
-}
+  clearCart();
+};
 
 onMounted(async () => {
   try {
@@ -88,6 +102,7 @@ onMounted(async () => {
       (acc, item) => acc + item._id.price * item.quantity,
       0
     );
+    total.value = total.value.toFixed(2);
   } catch (error) {
     console.error(error.response.data.message);
   }

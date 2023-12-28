@@ -5,7 +5,7 @@
       v-for="product in products"
       :key="product.id"
       class="sm:w-[80%] 2xl:w-[24%] h-auto shadow-lg hover:shadow-blue-300 rounded-lg flex flex-col justify-between"
-    >
+    > 
       <img
         :src="product.thumbnail"
         :alt="product.title"
@@ -29,6 +29,7 @@
           <input
             v-model="product.quantity"
             type="number"
+            id="quantity"
             class="w-1/3 text-center caret-blue-300"
           />
         </section>
@@ -64,7 +65,7 @@ const addToCart = (props) => {
   if(myCart.value.products.find(elem => elem._id === props._id)){
     myCart.value.products.forEach((product)=>{
       if(product._id === props._id){
-        product.quantity += props.quantity
+        product.quantity += parseInt(props.quantity) ? props.quantity : 1
       }
     })
   }else{
