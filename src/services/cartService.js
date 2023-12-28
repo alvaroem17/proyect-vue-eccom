@@ -9,6 +9,15 @@ export async function getMyCart() {
   return data;
 }
 
+export async function getMyCartDetailed() {
+  const { data } = await api.get("/carts/myCartDetailed", {
+    headers: {
+      Authorization: sessionStorage.token,
+    },
+  });
+  return data;
+}
+
 export async function updateMyCart(product) {
   const { data } = await api.put("/carts/myCart", product, {
     headers: {
