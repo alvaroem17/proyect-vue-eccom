@@ -19,27 +19,21 @@
         </li>
       </ul>
     </nav>
-    <section
-      class="flex gap-2 justify-center w-60"
-      v-if="!hasToken"
-    >
+    <section class="flex gap-2 justify-center w-60" v-if="!hasToken">
       <button
         class="bg-white text-blue-700 rounded h-10 w-24 hover:bg-gray-200"
-        @click="() => $router.push('/login')"
+        @click="() => handleRouter('/login')"
       >
         Login
       </button>
       <button
         class="border rounded h-10 w-24 hover:bg-blue-800"
-        @click="() => $router.push('/register')"
+        @click="() => handleRouter('/register')"
       >
         Register
       </button>
     </section>
-    <section
-      class="flex gap-2 justify-center w-60"
-      v-else
-    >
+    <section class="flex gap-2 justify-center w-60" v-else>
       <button
         class="bg-white text-blue-700 rounded h-10 w-24 hover:bg-gray-200"
         @click="logOut"
@@ -51,22 +45,33 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter, useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 
-const hasToken = ref(false)
-const navItems = ["Home", "Products", "Cart"];
+const hasToken = ref(false);
+const navItems = ref(["Home", "Products"]);
+
+const router = useRouter();
+const currentRoute = useRoute();
 
 const logOut = () => {
-  sessionStorage.removeItem('token')
-  sessionStorage.removeItem('userId')
-  hasToken.value = false
-  window.location.href = "/"
-}
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("userId");
+  hasToken.value = false;
+  navItems.value.pop();
+  handleRouter("/");
+};
 
-onMounted(() =>{
-  hasToken.value = sessionStorage.getItem('token')
-})
+const handleRouter = (route) => {
+  router.push(route);
+};
+
+onMounted(() => {
+  hasToken.value = sessionStorage.getItem("token");
+  if (hasToken.value) {
+    navItems.value.push("Cart");
+  }
+});
 
 </script>
 

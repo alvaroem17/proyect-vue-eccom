@@ -13,6 +13,7 @@
             placeholder="Email"
             class="w-4/6 bg-slate-100 rounded"
             v-model="email"
+            autofocus
           />
         </label>
         <label class="flex justify-between">
@@ -22,12 +23,18 @@
             placeholder="Password"
             class="w-4/6 bg-slate-100 rounded"
             v-model="password"
+            @keydown="
+              (e) => {
+                if (e.key === 'Enter') {
+                  loginCommand()
+                }
+              }
+            "
           />
         </label>
         <button
           class="w-full h-9 bg-blue-500 hover:bg-blue-700 rounded text-white"
           @click="loginCommand"
-          @keydown="(e) => e.key === 'Enter' && console.log('enter')"
         >
           Login
         </button>
@@ -53,13 +60,14 @@ const loginCommand = async () => {
     const response = await login(email.value, password.value);
     sessionStorage.setItem("token", response.token);
     sessionStorage.setItem("userId", response.user);
-    window.location.href = "/home";
+    window.location.href = "/"
     hasError = false;
   } catch (error) {
     hasError.value = true;
     errorMsg.value = error.response.data.message;
   }
 };
+
 </script>
 
 <style scoped>

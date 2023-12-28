@@ -13,6 +13,7 @@
             placeholder="Email"
             class="w-4/6 bg-slate-100 rounded"
             v-model="email"
+            autofocus
           />
         </label>
         <label class="flex justify-between">
@@ -85,7 +86,7 @@ const signUp = async () => {
   const response = await register(email.value, password.value, name.value, phone.value, username.value);
   sessionStorage.setItem("token", response.token);
   sessionStorage.setItem("userId", response.user);
-  window.location.href = "/home"
+  window.location.href = "/"
 };
 </script>
 

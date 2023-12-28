@@ -12,7 +12,6 @@ onMounted(
   async () => {
     try {
       cart.value = await getMyCart();
-      console.log(cart.value)
     } catch (error) {
       console.error(error.response.data.message)
     }

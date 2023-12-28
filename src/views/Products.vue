@@ -27,8 +27,8 @@
             Add to cart
           </button>
           <input
+            v-model="product.quantity"
             type="number"
-            defaultValue="1"
             class="w-1/3 text-center caret-blue-300"
           />
         </section>
@@ -39,23 +39,40 @@
 
 <script setup>
 import { getAllProducts } from "./../services/productService";
+import { getMyCart,updateMyCart } from "./../services/cartService";
 import { onMounted, ref } from "vue";
 
 const products = ref([]);
+const myCart = ref([]);
 onMounted(async () => {
-  getAllProducts()
-    .then((response) => {
-      products.value = response;
-    })
-    .catch((error) => console.error(error));
+  try {
+    products.value = await getAllProducts()
+  } catch (error) {
+    console.error(error)
+  }
+  try {
+    myCart.value = await getMyCart()
+  } catch (error) {
+    console.error(error)
+  }
 });
 
-const addToCart = (product) => {
+const addToCart = (props) => {
   if (!sessionStorage.getItem("token")) {
-    console.log("no token");
     window.location.href = "/login";
   }
-  console.log("token: " + sessionStorage.getItem("token"))
+  if(myCart.value.products.find(elem => elem._id === props._id)){
+    myCart.value.products.forEach((product)=>{
+      if(product._id === props._id){
+        product.quantity += props.quantity
+      }
+    })
+  }else{
+    myCart.value.products.push({_id:props._id,quantity:props.quantity})
+  }
+  
+  console.log(myCart.value)
+  updateMyCart(myCart.value)
 };
 </script>
 
