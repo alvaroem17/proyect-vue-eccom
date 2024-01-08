@@ -61,7 +61,7 @@ const loginCommand = async () => {
     sessionStorage.setItem("token", response.token);
     sessionStorage.setItem("userId", response.user);
     window.location.href = "/"
-    hasError = false;
+    hasError.value = false;
   } catch (error) {
     hasError.value = true;
     errorMsg.value = error.response.data.message;
