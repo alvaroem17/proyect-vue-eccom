@@ -17,6 +17,7 @@ export async function getMyCartDetailed() {
   });
   return data;
 }
+//! CAMBIAR El token por el de la store 
 
 export async function updateMyCart(product) {
   const { data } = await api.put("/carts/myCart", product, {

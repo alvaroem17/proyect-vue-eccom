@@ -49,17 +49,23 @@
 <script setup>
 import { ref } from "vue";
 import { login } from "./../services/authService";
+import { useAuthStore } from "../stores/auth";
 
 const password = ref("");
 const email = ref("");
 const errorMsg = ref("");
 const hasError = ref(false);
 
+const auth = useAuthStore();
+
 const loginCommand = async () => {
   try {
     const response = await login(email.value, password.value);
     sessionStorage.setItem("token", response.token);
     sessionStorage.setItem("userId", response.user);
+    auth.setToken(response.token);
+    auth.setUserId(response.user);
+    console.log(auth.getToken);
     window.location.href = "/"
     hasError.value = false;
   } catch (error) {

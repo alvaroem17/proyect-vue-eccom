@@ -7,6 +7,7 @@
         src="./../assets/_41593672-ba37-41a7-bf1d-71a34ae6f52c-removebg-preview.png"
         class="h-10"
       />
+      <p class="text-"></p>
     </section>
     <nav>
       <ul class="flex gap-5 justify-between w-60">
@@ -48,8 +49,11 @@
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 
+import { useAuthStore } from "../stores/auth"
+
 const hasToken = ref(false);
 const navItems = ref(["Home", "Products"]);
+const auth = useAuthStore();
 
 const router = useRouter();
 const currentRoute = useRoute();
@@ -57,6 +61,7 @@ const currentRoute = useRoute();
 const logOut = () => {
   sessionStorage.removeItem("token");
   sessionStorage.removeItem("userId");
+  auth.logout();
   hasToken.value = false;
   navItems.value.pop();
   handleRouter("/");
@@ -67,7 +72,8 @@ const handleRouter = (route) => {
 };
 
 onMounted(() => {
-  hasToken.value = sessionStorage.getItem("token");
+  console.log(auth.getToken);
+  hasToken.value = auth.getToken !== undefined ? true : false; //sessionStorage.getItem("token");
   if (hasToken.value) {
     navItems.value.push("Cart");
   }
