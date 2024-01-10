@@ -49,7 +49,7 @@
     <p v-if="paid !== false" class="text-green-500 absolute left-10 bottom-10">
       {{ paid }}
     </p>
-  </div>
+  </div> 
 </template>
 
 <script setup>
