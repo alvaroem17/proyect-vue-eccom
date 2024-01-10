@@ -7,7 +7,6 @@
         src="./../assets/_41593672-ba37-41a7-bf1d-71a34ae6f52c-removebg-preview.png"
         class="h-10"
       />
-      <p class="text-"></p>
     </section>
     <nav>
       <ul class="flex gap-5 justify-between w-60">
@@ -47,7 +46,7 @@
 
 <script setup>
 import { RouterLink, useRouter, useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onUpdated } from "vue";
 
 import { useAuthStore } from "../stores/auth"
 
@@ -72,12 +71,18 @@ const handleRouter = (route) => {
 };
 
 onMounted(() => {
-  console.log(auth.getToken);
-  hasToken.value = auth.getToken !== undefined ? true : false; //sessionStorage.getItem("token");
+  console.log(auth.getUserId);
+  hasToken.value = auth.getToken ? true : false; //sessionStorage.getItem("token");
   if (hasToken.value) {
     navItems.value.push("Cart");
   }
 });
+
+// onUpdated(() => {
+//   console.log(auth.getToken);
+//   hasToken.value = auth.getToken ? true : false; //sessionStorage.getItem("token");
+  
+// });
 
 </script>
 

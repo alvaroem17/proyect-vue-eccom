@@ -4,8 +4,11 @@ import { ref, computed } from "vue";
 export const useAuthStore = defineStore(
   "auth",
   () => {
-    const token = ref("");
-    const userId = ref("");
+    const setToken = sessionStorage.getItem("token");
+    const token = ref(setToken);
+
+    const user = sessionStorage.getItem("user");
+    const userId = ref(user);
 
     const getToken = computed(() => {
       return token.value;
@@ -15,19 +18,19 @@ export const useAuthStore = defineStore(
       return userId.value;
     });
 
-    const setToken = (newToken) => {
-      token.value = newToken;
-    };
+    // const setToken = (newToken) => {
+    //   token.value = newToken;
+    // };
 
-    const setUserId = (newUserId) => {
-      userId.value = newUserId;
-    };
+    // const setUserId = (newUserId) => {
+    //   userId.value = newUserId;
+    // };
 
     const logout = () => {
       token.value = "";
       userId.value = "";
     };
-    return { getToken, getUser, setToken, setUserId, logout };
+    return { getToken, getUser, logout };
   },
   { persist: true }
 );

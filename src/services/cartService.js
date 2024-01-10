@@ -1,9 +1,12 @@
 import api from "./config";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore()
 
 export async function getMyCart() {
   const { data } = await api.get("/carts/myCart", {
     headers: {
-      Authorization: sessionStorage.token,
+      Authorization: authStore.getToken,//sessionStorage.token,
     },
   });
   return data;
@@ -12,17 +15,16 @@ export async function getMyCart() {
 export async function getMyCartDetailed() {
   const { data } = await api.get("/carts/myCartDetailed", {
     headers: {
-      Authorization: sessionStorage.token,
+      Authorization: authStore.getToken,
     },
   });
   return data;
 }
-//! CAMBIAR El token por el de la store 
 
 export async function updateMyCart(product) {
   const { data } = await api.put("/carts/myCart", product, {
     headers: {
-      Authorization: sessionStorage.token,
+      Authorization: authStore.getToken,
     },
   });
   return data;

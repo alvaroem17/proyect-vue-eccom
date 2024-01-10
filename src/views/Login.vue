@@ -63,9 +63,8 @@ const loginCommand = async () => {
     const response = await login(email.value, password.value);
     sessionStorage.setItem("token", response.token);
     sessionStorage.setItem("userId", response.user);
-    auth.setToken(response.token);
-    auth.setUserId(response.user);
-    console.log(auth.getToken);
+    // auth.setToken(response.token);
+    // auth.setUserId(response.user);
     window.location.href = "/"
     hasError.value = false;
   } catch (error) {
