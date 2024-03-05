@@ -55,6 +55,9 @@
 <script setup>
 import { getMyCartDetailed, updateMyCart } from "./../services/cartService";
 import { onMounted, ref } from "vue";
+import { useRouter,RouterLink } from "vue-router";
+
+const router = useRouter()
 
 const cart = ref([]);
 const total = ref(0);
@@ -91,8 +94,9 @@ const removeFromCart = async (id) => {
 };
 
 const pay = () => {
-  paid.value = "Your products will be delivered shortly";
-  clearCart();
+  //paid.value = "Your products will be delivered shortly";
+  router.push("/pay");
+  //clearCart();
 };
 
 onMounted(async () => {
